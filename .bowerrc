@@ -1,0 +1,22 @@
+{
+  "name": "timetable2",
+  "description": "",
+  "main": "",
+  "directory": "public/components",
+  "authors": [
+    "Malsha Hansini <malsha.14@cse.mrt.ac.lk>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "gentelella": "^1.4.0"
+  }
+}
