@@ -9,25 +9,39 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     //
-    public function getDashboard(){
-        return view('dashboard');
+    public function getTeacherTimetable(){
+        return view('User/Teacher/TeacherView/teacher_timetable');
     }
-    public function postSignUp(Request $request){
-        $username = $request['username'];
+    public function getSchoolTimetable(){
+        return view('User/Principal/SchoolTimetable/school_timetable');
+    }
+    public function getSchoolList(){
+        return view('User/Zone/Schools/school_list');
+    }
+    public function postRegister(Request $request){
+        $email = $request['email'];
+        $type = $request['type'];
         $password = bcrypt($request['password']);
 
         $user = new User();
-        $user->username = $username;
+        $user->email = $email;
+        $user->type = $type;
         $user->password = $password;
         $user->save();
 
-        Auth::login($user);
-        return redirect()->route('dashboard');
+//        Auth::login($user);
+        return redirect()->route('view');
 
     }
-    public function postSignIn(Request $request){
-        if(Auth::attempt(['username'=>$request['username'] ,'password'=>$request['password']])){
-            return redirect()->route('dashboard');
+    public function postLogin(Request $request){
+        if(Auth::attempt(['email'=>$request['email'] ,'password'=>$request['password'] ,'type'=>'teacher'])){
+            return redirect()->route('teacher-timetable');
+        }
+        elseif(Auth::attempt(['email'=>$request['email'] ,'password'=>$request['password'] ,'type'=>'principal'])){
+            return redirect()->route('school-timetable');
+        }
+        elseif(Auth::attempt(['email'=>$request['email'] ,'password'=>$request['password'] ,'type'=>'zone'])){
+            return redirect()->route('school-list');
         }
         return redirect()->back();
 
