@@ -3,42 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use Illuminate\Support\Facades\Auth;
+use App\Grade;
 
-class UserController extends Controller
+
+class GradeController extends Controller
 {
-    public function getTeacherTimetable(){
-        return view('User/Teacher/Timetables/teacher_timetable');
-    }
-    public function getSchoolTimetable(){
-        return view('User/Principal/SchoolTimetable/school_timetable_class_for_principal');
-    }
-    public function postRegister(Request $request){
-        $email = $request['email'];
-        $type = $request['type'];
-        $password = bcrypt($request['password']);
+    public function postRegisterGrade(Request $request){
+        $which_grade = $request['grade'];
+        $number_of_classes = $request['number_of_grades'];
 
-        $user = new User();
-        $user->email = $email;
-        $user->type = $type;
-        $user->password = $password;
-        $user->save();
+        $grade = new Grade();
+        $grade->grade = $which_grade;
+        $grade->number_of_classes = $number_of_classes;
+        $grade->save();
 
 //        Auth::login($user);
-        return redirect()->back();
-
-    }
-    public function postLogin(Request $request){
-        if(Auth::attempt(['email'=>$request['email'] ,'password'=>$request['password'] ,'type'=>'teacher'])){
-            return redirect()->route('teacher-timetable');
-        }
-        elseif(Auth::attempt(['email'=>$request['email'] ,'password'=>$request['password'] ,'type'=>'principal'])){
-            return redirect()->route('school-timetable');
-        }
-        elseif(Auth::attempt(['email'=>$request['email'] ,'password'=>$request['password'] ,'type'=>'zone'])){
-            return redirect()->route('school-list');
-        }
         return redirect()->back();
 
     }

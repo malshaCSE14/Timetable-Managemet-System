@@ -1,0 +1,1 @@
+@extends('User.Zone.zone_view')

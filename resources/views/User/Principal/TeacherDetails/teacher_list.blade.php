@@ -1,0 +1,1 @@
+@extends('User.Principal.principal_view')

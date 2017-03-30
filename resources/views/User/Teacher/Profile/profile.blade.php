@@ -1,0 +1,1 @@
+@extends('User.Teacher.teacher_view')

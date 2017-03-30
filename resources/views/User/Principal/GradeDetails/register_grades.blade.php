@@ -1,4 +1,4 @@
-@extends('User.user_view')
+@extends('User.Principal.principal_view')
 
 @section('styles')
 

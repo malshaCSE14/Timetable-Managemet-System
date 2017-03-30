@@ -15,6 +15,10 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->string('name');
+            $table->string('position');
+            $table->integer('maximum_periods');
             $table->timestamps();
         });
     }

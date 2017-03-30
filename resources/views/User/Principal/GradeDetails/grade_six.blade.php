@@ -1,5 +1,26 @@
+<?php
+        $subjects = array("Religion" , "Sinhala" , "English", "Mathematics" , "Science" , "History" ,"Geography",
+                "Aesthetics", "Practical Technology" , "Health", "Tamil", "Citizens Education" , "Library");
+$periods = array(
+        $subjects[0]=>2,
+        $subjects[1]=>5,
+        $subjects[2]=>5,
+        $subjects[3]=>5,
+        $subjects[4]=>5,
+        $subjects[5]=>2,
+        $subjects[6]=>2,
+        $subjects[7]=>3,
+        $subjects[8]=>3,
+        $subjects[9]=>2,
+        $subjects[10]=>2,
+        $subjects[11]=>2,
+        $subjects[12]=>1
+);
+?>
+
 <div class="tab-pane active" id="6">
-    <form action="/" onsubmit="return add_subject();" id="form6">
+    <form action="{{route('register-grade-post')}}" method="post" onsubmit="return add_subject();" id="form6">
+        <input type="hidden" name="grade" id="grade" value="6">
         <div class="col-md-12 col-sm-12 col-xs-12">
 
             <div class="x_panel">
@@ -13,7 +34,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-4 col-xs-12">Number of classes</label>
                     <div class="col-md-8 col-sm-8 col-xs-12">
-                        <select required class="form-control">
+                        <select name="number_of_grades" id="number_of_grades" required class="form-control">
                             <option value="">None</option>
                             <?php
                             for($class=0;$class<26;$class++){
@@ -45,35 +66,43 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <?php
+                        $i=0;
+                                foreach ($subjects as $subject){
+
+                                $i++;
+                        ?>
                         <tr>
-                            <th scope="row">1</th>
-                            <td contenteditable='true'>Sinhala</td>
-                            <td contenteditable='true'>6</td>
+                            <th scope="row"><?php echo $i ?></th>
+                            <td><?php echo $subject ?></td>
+                            <td contenteditable='true'><?php echo $periods[$subject] ?></td>
 
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td contenteditable='true'>English</td>
-                            <td contenteditable='true'>5</td>
 
-                        </tr>
+                        <?php
+                                }?>
+
                         <tr>
-                            <th scope="row">3</th>
-                            <td contenteditable='true'>Maths</td>
-                            <td contenteditable='true'>6</td>
+                            <th scope="row">14</th>
+                            <td contenteditable='true'></td>
+                            <td contenteditable='true'></td>
 
                         </tr>
                         </tbody>
                     </table>
+                    <p id="demo"></p>
 
 
                 </div>
 
 
+
+
                 <div class="form-group" >
                     <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-8" style="padding-bottom: 10px;">
                         <button class="btn btn-primary" type="button">Cancel</button>
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success" onclick="myFunction()">Save</button>
+                        <input type="hidden" name="_token" value="{{Session::token() }}">
                     </div>
                 </div>
 
