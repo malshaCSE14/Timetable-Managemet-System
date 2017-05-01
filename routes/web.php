@@ -10,14 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-
-//Route::get('/view', function () {
-//    return view('view');
-//});
+Route::get('/register-zone', function () {
+    return view('User/register_zone');
+});
+Route::resource('schools', 'SchoolController');
 
 Route::get('/user-view', function () {
     return view('User/user_view');
@@ -40,45 +36,53 @@ Route::get('/teacher-view', function () {
 Route::get('/login', function () {
     return view('User/login');
 });
-Route::get('/sample-login', function () {
-    return view('User/sample_login');
-});
+
 Route::group(['middleware' => ['web']] ,function (){
+    Route::post('/register-zone-post',[
+        'uses' => 'ZoneController@postRegisterZone',
+        'as' => 'register-zone-post'
+    ]);
     Route::get('/', function () {
         return view('User/login');
-    });
-    Route::post('/register',[
-        'uses' => 'UserController@postRegister',
-        'as' => 'register'
-    ]);
+    })->name('home');
     Route::post('/login',[
         'uses' => 'UserController@postLogin',
         'as' => 'login'
     ]);
+    Route::get('/school-list',[
+        'uses' => 'SchoolController@getSchoolList',
+        'as' => 'school-list'
+    ]);
+    Route::get('/register-school',[
+        'uses' => 'SchoolController@getRegisterSchool',
+        'as' => 'register-school'
+    ]);
+    Route::post('/register-school-post',[
+        'uses' => 'SchoolController@postSchoolRegister',
+        'as' => 'register-school-post'
+    ]);
+    Route::get('/delete-school/{school_id}',[
+        'uses' => 'SchoolController@getDeleteSchool',
+        'as' => 'school.delete'
+    ]);
+    
+    
     Route::get('/view',[
         'uses' => 'UserController@getView',
         'as' => 'view'
     ]);
     Route::get('/teacher-timetable', [
         'uses' => 'UserController@getTeacherTimetable',
-        'as' => 'teacher-timetable'
+        'as' => 'teacher-timetable',
+        'middleware' => 'auth'
     ]);
     Route::get('/school-timetable',[
         'uses' => 'UserController@getSchoolTimetable',
         'as' => 'school-timetable'
     ]);
-    Route::get('/school-list',[
-        'uses' => 'ZoneController@getSchoolList',
-        'as' => 'school-list'
-    ]);
-    Route::get('/register-school',[
-        'uses' => 'ZoneController@getRegisterSchool',
-        'as' => 'register-school'
-    ]);
-    Route::post('/register-school-post',[
-        'uses' => 'ZoneController@postSchoolRegister',
-        'as' => 'register-school-post'
-    ]);
+    
+    
+
     Route::get('/unwatched-timetables',[
         'uses' => 'ZoneController@getUnwatchwedTimetables',
         'as' => 'unwatched-timetable'

@@ -30,6 +30,19 @@ $periods = array(
 
                 <form action="{{route('register-teacher-post')}}" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                     <span class="section">Teacher</span>
+                    @if(count($errors)>0)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>
+                                            {{$error}}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
                     {{--title--}}
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
@@ -52,7 +65,7 @@ $periods = array(
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="name" id="name" required="required" class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="name" value="{{ Request::old('name') }}" id="name" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
                     {{--position--}}
@@ -85,7 +98,7 @@ $periods = array(
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="periods">Email Address</label>                                     </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" name="email" id="email" class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="email" value="{{ Request::old('email') }}" id="email" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
                     {{--subjects--}}

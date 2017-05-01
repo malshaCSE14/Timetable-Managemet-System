@@ -13,13 +13,26 @@
             <div class="x_content">
                 <br />
                 <form class="form-horizontal form-label-left" action="{{route('register-school-post')}}" method="post">
+                    @if(count($errors)>0)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>
+                                            {{$error}}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
                     <span class="section">School</span>
                     {{--school name--}}
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">School Name <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="school_name" name="school_name" required="required" class="form-control col-md-7 col-xs-12">
+                            <input type="text" id="school_name" name="school_name" required="required" value="{{ Request::old('school_name') }}" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
                     {{--school logo--}}
@@ -31,19 +44,19 @@
                     {{--</div>--}}
 
                     <span class="section">Principal</span>
-                    {{--title1--}}
+                    {{--title--}}
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div id="title1" class="btn-group" data-toggle="buttons">
+                            <div id="title" class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    <input type="radio" name="title1" value="ven"> &nbsp; Ven. &nbsp;
+                                    <input type="radio" name="title" value="ven"> &nbsp; Ven. &nbsp;
                                 </label>
                                 <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    <input type="radio" name="title1" value="mr"> &nbsp; Mr. &nbsp;
+                                    <input type="radio" name="title" value="mr"> &nbsp; Mr. &nbsp;
                                 </label>
                                 <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                    <input type="radio" name="title1" value="ms"> Ms.
+                                    <input type="radio" name="title" value="ms"> Ms.
                                 </label>
                             </div>
                         </div>
@@ -53,14 +66,14 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12">
+                            <input type="text" id="name" name="name" value="{{ Request::old('name') }}" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
                     {{--email--}}
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Email</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="email" name="email" class="form-control col-md-7 col-xs-12">
+                            <input type="text" id="email" name="email" value="{{ Request::old('email') }}" class="form-control col-md-7 col-xs-12">
                         </div>
                     </div>
 
@@ -95,7 +108,7 @@
                     </a>
                     <div class="media-body">
                         <a class="title" href="#"><?php  echo $school['school_name']?></a>
-                        <p>Principal Name</p>
+                        <p><?php echo $school['principal_name']?></p>
                         </p>
                     </div>
                 </li>

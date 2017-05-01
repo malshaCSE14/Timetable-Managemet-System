@@ -14,21 +14,7 @@ class UserController extends Controller
     public function getSchoolTimetable(){
         return view('User/Principal/SchoolTimetable/school_timetable_class_for_principal');
     }
-    public function postRegister(Request $request){
-        $email = $request['email'];
-        $type = $request['type'];
-        $password = bcrypt($request['password']);
-
-        $user = new User();
-        $user->email = $email;
-        $user->type = $type;
-        $user->password = $password;
-        $user->save();
-
-//        Auth::login($user);
-        return redirect()->back();
-
-    }
+    
     public function postLogin(Request $request){
         if(Auth::attempt(['email'=>$request['email'] ,'password'=>$request['password'] ,'type'=>'teacher'])){
             return redirect()->route('teacher-timetable');

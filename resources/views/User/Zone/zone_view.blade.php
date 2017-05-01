@@ -41,6 +41,7 @@
     {{--@include('Templates.left_col')--}}
 
     {{--@include('Templates.top_nav')--}}
+    @include('Templates.top_nav')
 @endsection
 
 @section('footercontent')

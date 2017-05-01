@@ -9,44 +9,36 @@ use Illuminate\Http\Request;
 
 class ZoneController extends Controller
 {
-    public function getSchoolList(){
-        $schools = School::all(['school_name']);
-        $principals = Principal::all(['title', 'name']);
-        return view('User/Zone/Schools/school_list', ['schools'=>$schools], ['principals'=>$principals]);
-    }
-    public function getRegisterSchool(){
-        $schools = School::all(['school_name']);
-        $principals = Principal::all(['title', 'name']);
-        return view('User/Zone/Schools/register_school', ['schools'=>$schools], ['principals'=>$principals]);
-    }
+    
+    
     public function getUnwatchwedTimetables(){
         return view('User/Zone/Schools/unwatched_timetables');
     }
+    public function postRegisterZone(Request $request){
 
-    public function postSchoolRegister(Request $request){
-        $school_name = $request['school_name'];
-        $title = $request['title1'];
-        $name = $request['name'];
+        $this->validate($request , [
+            'email' => 'required|email|unique:users',
+            //'type' => 'required|max:20',
+            'password' => 'required|min:4'
+        ]);
         $email = $request['email'];
-        $password = bcrypt('12345');
+        $type = 'zone';
+        $password = bcrypt($request['password']);
 
         $user = new User();
         $user->email = $email;
-        $user->type = "principal";
+        $user->type = $type;
         $user->password = $password;
-        $user->save();
-
-        $school = new School();
-        $school->school_name = $school_name;
-        $school->save();
-        $principal = new Principal();
-        $principal->title = $title;
-        $principal->name = $name;
-        $principal->save();
-//        Auth::login($user);
-        return redirect()->back();
+        $message = 'Registration Failed!!';
+        if ($user->save()) {
+            $message = 'Successfully Registered!!!';
+        }
+        //        Auth::login($user);
+        return redirect()->back()->with(['message' => $message]);
 
     }
+
+    
     /**
      * Display a listing of the resource.
      *
